@@ -17,7 +17,7 @@
 
 ```bash
 # 1. 拉取镜像
-docker pull ghcr.io/YOUR_USERNAME/tgbot:latest
+docker pull ghcr.io/ham0mer/tgbot:latest
 
 # 2. 运行
 docker run -d \
@@ -26,7 +26,7 @@ docker run -d \
   -e OWNER_ID="你的用户ID" \
   -e SUPABASE_URL="你的Supabase_URL" \
   -e SUPABASE_KEY="你的Supabase_Key" \
-  ghcr.io/YOUR_USERNAME/tgbot:latest
+  ghcr.io/ham0mer/tgbot:latest
 ```
 
 > 📖 详细说明请查看 [DOCKER_BUILD.md](./DOCKER_BUILD.md)
