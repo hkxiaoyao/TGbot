@@ -9,7 +9,6 @@
 - 🚫 用户拉黑/解除拉黑（`/block` 和 `/unblock` 命令）
 - ☁️ Supabase 云数据库（数据永不丢失）
 - 🐳 Docker 支持
-- 🤖 GitHub Actions 自动构建镜像
 
 ## 🚀 快速开始
 先配置数据库

@@ -245,13 +245,13 @@ class MessageHandler {
       });
 
       // 通知主人有新用户开始验证
-      await this.bot.sendMessage(
-        this.ownerId,
-        `🆕 新用户开始验证\n\n` +
-        `👥 用户: ${username}\n` +
-        `🆔 ID: ${userId}\n` +
-        `⏰ 时间: ${new Date().toLocaleString('zh-CN')}`
-      );
+      // await this.bot.sendMessage(
+      //   this.ownerId,
+      //   `🆕 新用户开始验证\n\n` +
+      //   `👥 用户: ${username}\n` +
+      //   `🆔 ID: ${userId}\n` +
+      //   `⏰ 时间: ${new Date().toLocaleString('zh-CN')}`
+      // );
 
       logger.info(`✅ 验证码已发送 | 用户: ${username} (${userId})`);
 
