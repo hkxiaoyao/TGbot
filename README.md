@@ -13,7 +13,7 @@
 
 ## 🚀 快速开始
 先配置数据库
-### 1. 配置 Supabase 数据库
+### 配置 Supabase 数据库
 
 在 [Supabase](https://supabase.com) 创建项目，然后在 SQL Editor 中执行：
 
@@ -59,59 +59,68 @@ CREATE INDEX idx_pending_verifications_user_id ON pending_verifications(user_id)
 CREATE INDEX idx_blocked_users_user_id ON blocked_users(user_id);
 ```
 
-### 方法一：使用 GitHub 镜像（推荐）
+### 🐳 Docker 部署
+
+### 方法一：直接运行
 
 ```bash
-# 1. 拉取镜像
-docker pull ghcr.io/ham0mer/tgbot:latest
-
-# 2. 运行
 docker run -d \
   --name telegram-bot \
+  --restart unless-stopped \
   -e BOT_TOKEN="你的Bot_Token" \
   -e OWNER_ID="你的用户ID" \
   -e SUPABASE_URL="你的Supabase_URL" \
   -e SUPABASE_KEY="你的Supabase_Key" \
+  -v $(pwd)/logs:/app/logs \
   ghcr.io/ham0mer/tgbot:latest
 ```
 
-> 📖 详细说明请查看 [DOCKER_BUILD.md](./DOCKER_BUILD.md)
+### 方法二：使用 docker-compose
 
-### 方法二：本地构建
+修改 `docker-compose.yml`：
 
-### 1. 配置环境变量
-
-编辑 `.env` 文件：
-
-```env
-BOT_TOKEN=你的Bot_Token              # 从 @BotFather 获取
-OWNER_ID=你的用户ID                  # 从 @userinfobot 获取
-SUPABASE_URL=你的Supabase_URL        # 从 Supabase Dashboard 获取
-SUPABASE_KEY=你的Supabase_Key        # 从 Supabase Dashboard 获取
+```yaml
+services:
+  telegram-bot:
+    image: ghcr.io/ham0mer/tgbot:latest
+    container_name: telegram-bot
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - OWNER_ID=${OWNER_ID}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - LOG_LEVEL=info
+    volumes:
+      - ./logs:/app/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 ```
 
-### 2. 启动机器人
+然后启动：
 
 ```bash
-# 安装依赖
-npm install
-
-# 开发模式
-npm run dev
-
-# 生产模式
-npm start
-```
-
-## 🐳 Docker 部署
-
-```bash
-# 配置 .env 文件后
 docker compose up -d
-
-# 查看日志
-docker compose logs -f
 ```
+
+### 启动并查看日志
+
+```bash
+docker compose up -d && docker compose logs -f
+```
+
+## 🔄 更新镜像
+
+### 更新到最新版本
+
+```bash
+docker compose pull && docker compose down && docker compose up -d && docker compose logs -f
+docker image prune
+```
+
 
 ##  使用说明
 
