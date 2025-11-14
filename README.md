@@ -18,6 +18,11 @@
 - ☁️ Supabase 云数据库（数据永不丢失）
 - 🐳 Docker 支持
 
+## 近期更新
+去除一些无用提醒
+ - 去除新用户使用提醒
+ - 去除用户/主人 消息发送成功提醒
+
 ## 🔄 完整功能流程
 ```mermaid
 graph TB
@@ -147,6 +152,12 @@ docker run -d \
   ghcr.io/ham0mer/tgbot:latest
 ```
 
+### 🔄更新
+拉取镜像，重启容器
+```bash
+docker pull ghcr.io/ham0mer/tgbot:latest
+```
+
 ### 方法二：使用 docker-compose
 
 修改 `docker-compose.yml`：
@@ -172,27 +183,17 @@ services:
         max-file: "3"
 ```
 
-然后启动：
-
-```bash
-docker compose up -d
-```
-
-### 启动并查看日志
+### 启动
 
 ```bash
 docker compose up -d && docker compose logs -f
 ```
-
-## 🔄 更新镜像
-
-### 更新到最新版本
+## 🔄更新
 
 ```bash
 docker compose pull && docker compose down && docker compose up -d && docker compose logs -f
 docker image prune
 ```
-
 
 ##  使用说明
 
@@ -206,22 +207,6 @@ docker image prune
 - **拉黑用户**：回复用户消息并发送 `/block`
 - **解除拉黑**：回复用户消息并发送 `/unblock`
 
-##  项目结构
-
-```
-TGbot/
- src/
-    bot.js                    # Bot 核心
-    handlers/messageHandler.js # 消息处理
-    filters/adFilter.js       # 验证码系统
-    utils/
-        supabaseClient.js     # Supabase 客户端
-        supabaseDatabase.js   # 数据库管理
- database/supabase_schema.sql  # 数据库表结构
- .env                          # 环境变量
- docker-compose.yml            # Docker 配置
-```
-
 ## License
 
-MIT
+[MIT](https://github.com/Ham0mer/TGbot?tab=MIT-1-ov-file)

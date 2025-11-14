@@ -244,15 +244,6 @@ class MessageHandler {
         caption: '📷 请回复图片中的验证码：'
       });
 
-      // 通知主人有新用户开始验证
-      // await this.bot.sendMessage(
-      //   this.ownerId,
-      //   `🆕 新用户开始验证\n\n` +
-      //   `👥 用户: ${username}\n` +
-      //   `🆔 ID: ${userId}\n` +
-      //   `⏰ 时间: ${new Date().toLocaleString('zh-CN')}`
-      // );
-
       logger.info(`✅ 验证码已发送 | 用户: ${username} (${userId})`);
 
     } catch (error) {
@@ -270,15 +261,6 @@ class MessageHandler {
    */
   async forwardToOwner(msg, username) {
     try {
-      // 发送用户信息
-      // const userInfo = `📨 新消息来自: ${username}\n` +
-      //                 `🆔 用户ID: ${msg.from.id}\n` +
-      //                 `⏰ 时间: ${new Date().toLocaleString('zh-CN')}\n` +
-      //                 `💡 回复此消息可直接回复用户\n` +
-      //                 `${'─'.repeat(30)}`;
-
-      // await this.bot.sendMessage(this.ownerId, userInfo);
-
       // 转发原始消息，并记录消息ID
       const forwardedMsg = await this.bot.forwardMessage(
         this.ownerId,
@@ -288,12 +270,6 @@ class MessageHandler {
       
       // 保存消息映射到数据库
       await this.db.saveMessageMapping(forwardedMsg.message_id, msg.from.id, username);
-
-      // 向用户确认
-      // await this.bot.sendMessage(
-      //   msg.chat.id,
-      //   '✅ 您的消息已成功发送！'
-      // );
 
       logger.info(`📤 消息已转发给主人 | 用户: ${username} (${msg.from.id}) | 转发消息ID: ${forwardedMsg.message_id}`);
 
@@ -312,15 +288,6 @@ class MessageHandler {
    */
   async forwardPhotoToOwner(msg, username) {
     try {
-      // 发送用户信息
-      // const userInfo = `📷 新图片来自: ${username}\n` +
-      //                 `🆔 用户ID: ${msg.from.id}\n` +
-      //                 `⏰ 时间: ${new Date().toLocaleString('zh-CN')}\n` +
-      //                 `💡 回复此消息可直接回复用户\n` +
-      //                 `${'─'.repeat(30)}`;
-
-      // await this.bot.sendMessage(this.ownerId, userInfo);
-
       // 转发图片，并记录消息ID
       const forwardedMsg = await this.bot.forwardMessage(
         this.ownerId,
@@ -330,12 +297,6 @@ class MessageHandler {
       
       // 保存消息映射到数据库
       await this.db.saveMessageMapping(forwardedMsg.message_id, msg.from.id, username);
-
-      // 向用户确认
-      await this.bot.sendMessage(
-        msg.chat.id,
-        '✅ 您的图片已成功发送！'
-      );
 
       logger.info(`📤 图片已转发给主人 | 用户: ${username} (${msg.from.id}) | 转发消息ID: ${forwardedMsg.message_id}`);
 
@@ -413,12 +374,6 @@ class MessageHandler {
         );
         return;
       }
-
-      // 确认发送成功
-      await this.bot.sendMessage(
-        this.ownerId,
-        `✅ 回复已发送给用户 ${username} (ID: ${targetUserId})`
-      );
 
       logger.info(`✅ 主人回复已发送 | 目标用户: ${username} (${targetUserId}) | 类型: ${msg.photo ? '图片' : '文本'}`);
 
